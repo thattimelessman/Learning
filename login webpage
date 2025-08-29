@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MLCT - My Legal Case Tracker</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&family=Cormorant+Garamond:wght@600&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
@@ -20,6 +22,7 @@
             font-family: 'Raleway', sans-serif;
             color: #111;
             overflow: hidden;
+            transition: background 0.5s, color 0.5s;
         }
         /* Background */
         
@@ -31,6 +34,7 @@
             height: 100%;
             object-fit: cover;
             z-index: -2;
+            transition: opacity 0.5s ease;
         }
         
         .overlay {
@@ -74,7 +78,7 @@
         
         #loader h1 {
             color: #fff;
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Libre Baskerville', serif;
             font-size: 2rem;
             letter-spacing: 2px;
         }
@@ -105,6 +109,7 @@
             position: relative;
             z-index: 10;
             animation: fadeIn 1.2s ease-in-out;
+            border: 6px double #641226;
         }
         
         @keyframes fadeIn {
@@ -138,10 +143,15 @@
             width: 85px;
             height: 85px;
             object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+        
+        .brand img:hover {
+            transform: scale(1.15) rotate(5deg);
         }
         
         .brand h1 {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Libre Baskerville', serif;
             font-size: 3.2rem;
             font-weight: 600;
             letter-spacing: 2px;
@@ -149,7 +159,7 @@
         }
         
         .left h2 {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Libre Baskerville', serif;
             font-size: 1.5rem;
             margin-bottom: 1.2rem;
             color: #641226;
@@ -177,15 +187,19 @@
             width: 50%;
             padding: 2.5rem;
         }
-        /* Headings with underline animation */
+        /* Headings */
         
         .form-container h2 {
             font-size: 2.3rem;
             margin-bottom: 1.8rem;
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Libre Baskerville', serif;
             color: #641226;
             position: relative;
             display: inline-block;
+        }
+        
+        body.dark .form-container h2 {
+            color: #ADD8E6;
         }
         
         .form-container h2::after {
@@ -193,7 +207,7 @@
             display: block;
             width: 0;
             height: 3px;
-            background: #641226;
+            background: currentColor;
             margin-top: 6px;
             transition: width 0.6s ease;
         }
@@ -201,11 +215,11 @@
         .form-container h2.loaded::after {
             width: 100%;
         }
-        /* Labels & placeholders */
+        /* Labels & Inputs */
         
         label {
-            font-family: 'Roboto Mono', monospace;
-            font-size: .9rem;
+            font-family: 'Lora', serif;
+            font-size: .95rem;
             font-weight: 600;
             display: block;
             margin-bottom: .3rem;
@@ -218,22 +232,24 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             outline: none;
-            margin-bottom: 1.2rem;
+            margin-bottom: .5rem;
             font-size: .95rem;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Lora', serif;
         }
         
         input:focus {
             border-color: #641226;
             box-shadow: 0 0 0 2px rgba(100, 18, 38, 0.2);
         }
+        /* Error messages */
         
-        input::placeholder {
-            font-family: 'Roboto Mono', monospace;
-            font-size: .9rem;
-            color: #666;
+        .error {
+            color: red;
+            font-size: .85rem;
+            margin-bottom: .8rem;
+            display: none;
         }
-        /* Buttons with pixel press animation */
+        /* Buttons */
         
         .btn {
             background: #641226;
@@ -247,6 +263,7 @@
             position: relative;
             overflow: hidden;
             transition: transform .2s ease, box-shadow .3s ease;
+            margin-top: .5rem;
         }
         
         .btn:hover {
@@ -254,33 +271,32 @@
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(100, 18, 38, 0.6);
         }
-        /* Pixelate animation effect */
         
         @keyframes pixelate {
             0% {
-                filter: contrast(200%) saturate(200%) blur(0px);
+                clip-path: inset(0 0 0 0);
                 background: #641226;
             }
-            25% {
-                filter: contrast(300%) blur(2px);
+            20% {
+                clip-path: inset(10% 30% 40% 20%);
                 background: #801732;
             }
             50% {
-                filter: contrast(400%) blur(4px);
+                clip-path: inset(20% 10% 30% 15%);
                 background: #ADD8E6;
             }
-            75% {
-                filter: contrast(300%) blur(2px);
+            80% {
+                clip-path: inset(15% 25% 25% 35%);
                 background: #7db0c4;
             }
             100% {
-                filter: contrast(200%) blur(0px);
+                clip-path: inset(0 0 0 0);
                 background: #ADD8E6;
             }
         }
         
         .btn:active {
-            animation: pixelate 0.4s steps(4, end);
+            animation: pixelate 0.8s steps(6, end);
             background: #ADD8E6 !important;
             color: #111;
         }
@@ -292,9 +308,12 @@
         
         .toggle-link a {
             color: #641226;
-            cursor: pointer;
-            text-decoration: none;
             font-weight: 600;
+            text-decoration: none;
+        }
+        
+        body.dark .toggle-link a {
+            color: #ADD8E6;
         }
         
         .slide-signup {
@@ -308,22 +327,68 @@
             justify-content: center;
             padding: 1rem;
         }
+        /* Dark Mode */
         
-        @media(max-width: 768px) {
-            .card {
-                grid-template-columns: 1fr;
-            }
-            .left {
-                text-align: center;
-            }
-            .brand {
-                justify-content: center;
-            }
+        body.dark {
+            background: #111;
+            color: #f5f5f5;
+        }
+        
+        body.dark .card {
+            background: rgba(20, 20, 20, 0.85);
+            border-color: #ADD8E6;
+        }
+        
+        body.dark .left p,
+        body.dark label {
+            color: #eee;
+        }
+        
+        body.dark .btn {
+            background: #ADD8E6;
+            color: #111;
+        }
+        
+        body.dark .btn:hover {
+            background: #9ccfe0;
+        }
+        /* Dark Mode Toggle Button */
+        
+        #modeToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #641226;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.4s, transform 0.3s;
+            z-index: 2000;
+            color: #111;
+        }
+        
+        #modeToggle:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        body.dark #modeToggle {
+            background: rgba(0, 0, 0, 0.7);
+            border-color: #ADD8E6;
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
+
+    <!-- Dark/Light Mode Toggle -->
+    <div id="modeToggle">☀</div>
 
     <!-- Loader -->
     <div id="loader">
@@ -331,11 +396,13 @@
         <h1>MLCT</h1>
     </div>
 
+
     <!-- Background Video -->
-    <video autoplay muted loop playsinline class="video-bg">
-    <source src="https://cdn.pixabay.com/video/2022/08/20/128525-741495530_large.mp4" type="video/mp4">
+    <video id="bgVideo" autoplay muted loop playsinline class="video-bg">
+     <source id="bgSource" src="https://cdn.pixabay.com/video/2022/08/20/128525-741495530_large.mp4" type="video/mp4">
   </video>
     <div class="overlay"></div>
+
 
     <!-- Card -->
     <div class="container">
@@ -356,25 +423,36 @@
                     <!-- Login -->
                     <div class="form-container">
                         <h2 id="loginTitle">Login</h2>
-                        <form>
+                        <form id="loginForm">
                             <label>Email</label>
-                            <input type="email" placeholder="Enter your email">
+                            <input type="email" id="loginEmail" placeholder="Enter your email">
+                            <div class="error" id="loginEmailError">Email is required.</div>
+
                             <label>Password</label>
-                            <input type="password" placeholder="Enter your password">
+                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                            <div class="error" id="loginPassError">Password must include uppercase, number & special char.</div>
+
                             <button type="submit" class="btn">Login</button>
                         </form>
                         <p class="toggle-link">Don’t have an account? <a onclick="toggleForm('signup')">Sign up</a></p>
                     </div>
+
                     <!-- Signup -->
                     <div class="form-container">
                         <h2 id="signupTitle">Sign Up</h2>
-                        <form>
+                        <form id="signupForm">
                             <label>Full Name</label>
-                            <input type="text" placeholder="Enter your full name">
+                            <input type="text" id="signupName" placeholder="Enter your full name">
+                            <div class="error" id="signupNameError">Name is required.</div>
+
                             <label>Email</label>
-                            <input type="email" placeholder="Enter your email">
+                            <input type="email" id="signupEmail" placeholder="Enter your email">
+                            <div class="error" id="signupEmailError">Email is required.</div>
+
                             <label>Password</label>
-                            <input type="password" placeholder="Create a password">
+                            <input type="password" id="signupPassword" placeholder="Create a password">
+                            <div class="error" id="signupPassError">Password must include uppercase, number & special char.</div>
+
                             <button type="submit" class="btn">Sign Up</button>
                         </form>
                         <p class="toggle-link">Already have an account? <a onclick="toggleForm('login')">Login</a></p>
@@ -392,14 +470,99 @@
             else wrapper.classList.remove('slide-signup');
         }
 
-        // Loader script
+        // Loader
         window.addEventListener("load", () => {
             const loader = document.getElementById("loader");
             setTimeout(() => {
                 loader.classList.add("hidden");
                 document.getElementById("loginTitle").classList.add("loaded");
                 document.getElementById("signupTitle").classList.add("loaded");
+
+                // 🔥 Force video to load & play immediately
+                const bgVideo = document.getElementById("bgVideo");
+                bgVideo.load();
+                bgVideo.play().catch(err => console.log("Autoplay blocked:", err));
             }, 1200);
+        });
+
+
+
+        const toggleBtn = document.getElementById("modeToggle");
+        const bgVideo = document.getElementById("bgVideo");
+        const bgSource = document.getElementById("bgSource");
+        toggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            if (document.body.classList.contains("dark")) {
+                toggleBtn.textContent = "🌕︎"; // black moon
+                bgSource.src = "https://cdn.pixabay.com/video/2019/08/01/25696-352026473_large.mp4";
+            } else {
+                toggleBtn.textContent = "☀"; // white sun
+                bgSource.src = "https://cdn.pixabay.com/video/2022/08/20/128525-741495530_large.mp4";
+            }
+            bgVideo.load();
+            bgVideo.play();
+        });
+
+        // Form Validation
+        function validatePassword(pass) {
+            const regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).+$/;
+            return regex.test(pass);
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", e => {
+            e.preventDefault();
+            let valid = true;
+
+            const email = document.getElementById("loginEmail");
+            const pass = document.getElementById("loginPassword");
+
+            if (!email.value) {
+                document.getElementById("loginEmailError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("loginEmailError").style.display = "none";
+            }
+
+            if (!pass.value || !validatePassword(pass.value)) {
+                document.getElementById("loginPassError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("loginPassError").style.display = "none";
+            }
+
+            if (valid) alert("Login successful!");
+        });
+
+        document.getElementById("signupForm").addEventListener("submit", e => {
+            e.preventDefault();
+            let valid = true;
+
+            const name = document.getElementById("signupName");
+            const email = document.getElementById("signupEmail");
+            const pass = document.getElementById("signupPassword");
+
+            if (!name.value) {
+                document.getElementById("signupNameError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("signupNameError").style.display = "none";
+            }
+
+            if (!email.value) {
+                document.getElementById("signupEmailError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("signupEmailError").style.display = "none";
+            }
+
+            if (!pass.value || !validatePassword(pass.value)) {
+                document.getElementById("signupPassError").style.display = "block";
+                valid = false;
+            } else {
+                document.getElementById("signupPassError").style.display = "none";
+            }
+
+            if (valid) alert("Signup successful!");
         });
     </script>
 </body>
