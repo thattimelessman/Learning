@@ -65,14 +65,11 @@
             visibility: hidden;
         }
         
-        #loader svg {
-            width: 80px;
-            height: 80px;
+        #loader img {
+            width: 90px;
+            height: 90px;
             margin-bottom: 20px;
-            fill: none;
-            stroke: #fff;
-            stroke-width: 2;
-            animation: spin 2s linear infinite;
+            animation: pulse 2s infinite;
         }
         
         #loader h1 {
@@ -82,12 +79,15 @@
             letter-spacing: 2px;
         }
         
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
+        @keyframes pulse {
+            0%,
             100% {
-                transform: rotate(360deg);
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
             }
         }
         /* Card */
@@ -131,16 +131,13 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
         }
         
-        .brand svg {
-            width: 90px;
-            height: 90px;
-            flex-shrink: 0;
-            fill: none;
-            stroke: #641226;
-            stroke-width: 2;
+        .brand img {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
         }
         
         .brand h1 {
@@ -180,14 +177,31 @@
             width: 50%;
             padding: 2.5rem;
         }
+        /* Headings with underline animation */
         
         .form-container h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.3rem;
+            margin-bottom: 1.8rem;
             font-family: 'Cormorant Garamond', serif;
             color: #641226;
+            position: relative;
+            display: inline-block;
         }
-        /* 🔥 Labels & placeholders font */
+        
+        .form-container h2::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 3px;
+            background: #641226;
+            margin-top: 6px;
+            transition: width 0.6s ease;
+        }
+        
+        .form-container h2.loaded::after {
+            width: 100%;
+        }
+        /* Labels & placeholders */
         
         label {
             font-family: 'Roboto Mono', monospace;
@@ -219,7 +233,7 @@
             font-size: .9rem;
             color: #666;
         }
-        /* Buttons */
+        /* Buttons with pixel press animation */
         
         .btn {
             background: #641226;
@@ -230,13 +244,45 @@
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
-            transition: all .3s;
+            position: relative;
+            overflow: hidden;
+            transition: transform .2s ease, box-shadow .3s ease;
         }
         
         .btn:hover {
             background: #801732;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(100, 18, 38, 0.6);
+        }
+        /* Pixelate animation effect */
+        
+        @keyframes pixelate {
+            0% {
+                filter: contrast(200%) saturate(200%) blur(0px);
+                background: #641226;
+            }
+            25% {
+                filter: contrast(300%) blur(2px);
+                background: #801732;
+            }
+            50% {
+                filter: contrast(400%) blur(4px);
+                background: #ADD8E6;
+            }
+            75% {
+                filter: contrast(300%) blur(2px);
+                background: #7db0c4;
+            }
+            100% {
+                filter: contrast(200%) blur(0px);
+                background: #ADD8E6;
+            }
+        }
+        
+        .btn:active {
+            animation: pixelate 0.4s steps(4, end);
+            background: #ADD8E6 !important;
+            color: #111;
         }
         
         .toggle-link {
@@ -281,9 +327,7 @@
 
     <!-- Loader -->
     <div id="loader">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-      <circle cx="32" cy="32" r="28"/>
-    </svg>
+        <img src="logo.png" alt="Logo">
         <h1>MLCT</h1>
     </div>
 
@@ -299,12 +343,7 @@
             <!-- Left -->
             <div class="left">
                 <div class="brand">
-                    <!-- Inline SVG logo -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-            <circle cx="32" cy="32" r="28"/>
-            <path d="M20 44 Q32 20 44 44" stroke-linecap="round" fill="none"/>
-            <circle cx="32" cy="28" r="6"/>
-          </svg>
+                    <img src="logo.png" alt="MLCT Logo">
                     <h1>MLCT</h1>
                 </div>
                 <h2>My Legal Case Tracker</h2>
@@ -316,7 +355,7 @@
                 <div id="formWrapper" class="form-wrapper">
                     <!-- Login -->
                     <div class="form-container">
-                        <h2>Login</h2>
+                        <h2 id="loginTitle">Login</h2>
                         <form>
                             <label>Email</label>
                             <input type="email" placeholder="Enter your email">
@@ -328,7 +367,7 @@
                     </div>
                     <!-- Signup -->
                     <div class="form-container">
-                        <h2>Sign Up</h2>
+                        <h2 id="signupTitle">Sign Up</h2>
                         <form>
                             <label>Full Name</label>
                             <input type="text" placeholder="Enter your full name">
@@ -358,7 +397,9 @@
             const loader = document.getElementById("loader");
             setTimeout(() => {
                 loader.classList.add("hidden");
-            }, 1200); // wait a bit for smooth transition
+                document.getElementById("loginTitle").classList.add("loaded");
+                document.getElementById("signupTitle").classList.add("loaded");
+            }, 1200);
         });
     </script>
 </body>
