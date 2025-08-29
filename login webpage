@@ -289,7 +289,7 @@
 
     <!-- Background Video -->
     <video autoplay muted loop playsinline class="video-bg">
-    <source src="https://cdn.pixabay.com/video/2021/07/31/84177-583094826_large.mp4" type="video/mp4">
+    <source src="https://cdn.pixabay.com/video/2022/08/20/128525-741495530_large.mp4" type="video/mp4">
   </video>
     <div class="overlay"></div>
 
