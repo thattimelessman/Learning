@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLCT - My Legal Case Tracker</title>
+    <link rel="icon" href="logo.png" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Dark/Light Mode Toggle -->
+    <div id="modeToggle">☀</div>
+
+    <!-- Loader -->
+    <div id="loader">
+        <img src="logo.png" alt="Logo">
+        <h1>MLCT</h1>
+    </div>
+
+
+    <!-- Background Video -->
+    <video id="bgVideo" autoplay muted loop playsinline class="video-bg">
+     <source id="bgSource" src="https://assets.mixkit.co/videos/preview/mixkit-the-scales-of-justice-47602-large.mp4" type="video/mp4">
+  </video>
+    <div class="overlay"></div>
+
+
+    <!-- Card -->
+    <div class="container">
+        <div class="card">
+            <!-- Left -->
+            <div class="left">
+                <div class="brand">
+                    <img src="logo.png" alt="MLCT Logo">
+                    <h1>MLCT</h1>
+                </div>
+                <h2>My Legal Case Tracker</h2>
+                <div id="canvas-container"></div>
+            </div>
+
+            <!-- Right -->
+            <div class="right">
+                <div id="formWrapper" class="form-wrapper">
+                    <!-- Login -->
+                    <div class="form-container">
+                        <h2 id="loginTitle">Login</h2>
+                        <form id="loginForm">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" placeholder="Enter your email">
+                            <div class="error" id="loginEmailError">Email is required.</div>
+
+                            <label>Password</label>
+                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                            <div class="error" id="loginPassError">Password must include uppercase, number & special char.</div>
+
+                            <button type="submit" class="btn">Login</button>
+                        </form>
+                        <p class="toggle-link">Don’t have an account? <a onclick="toggleForm('signup')">Sign up</a></p>
+                    </div>
+
+                    <!-- Signup -->
+                    <div class="form-container">
+                        <h2 id="signupTitle">Sign Up</h2>
+                        <form id="signupForm">
+                            <label>Full Name</label>
+                            <input type="text" id="signupName" placeholder="Enter your full name">
+                            <div class="error" id="signupNameError">Name is required.</div>
+
+                            <label>Email</label>
+                            <input type="email" id="signupEmail" placeholder="Enter your email">
+                            <div class="error" id="signupEmailError">Email is required.</div>
+
+                            <label>Password</label>
+                            <input type="password" id="signupPassword" placeholder="Create a password">
+                            <div class="error" id="signupPassError">Password must include uppercase, number & special char.</div>
+
+                            <button type="submit" class="btn">Sign Up</button>
+                        </form>
+                        <p class="toggle-link">Already have an account? <a onclick="toggleForm('login')">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/jsm/controls/OrbitControls.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
